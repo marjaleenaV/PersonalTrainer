@@ -7,10 +7,15 @@ import { Link, Outlet } from 'react-router';
 
 import './App.css'
 import Box from '@mui/material/Box';
+import { useState } from 'react';
+
+import type { CustomerItem } from './types';
 
 
 
 function App() {
+
+  const [customers, setCustomers] = useState<CustomerItem[]>([]);
 
   return (
     <>
@@ -37,7 +42,7 @@ function App() {
           </Box>
             <br></br>
             {/*Page Content*/}
-        <Outlet />
+        <Outlet context={{customers, setCustomers}}/>
         <CssBaseline /> {/*Shows elements similar regardless of browser*/}
       </Container>
 
