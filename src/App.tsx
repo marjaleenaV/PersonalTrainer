@@ -10,12 +10,14 @@ import Box from '@mui/material/Box';
 import { useState } from 'react';
 
 import type { CustomerItem } from './types';
+import type { TrainingItem } from './types';
 
 
 
 function App() {
 
   const [customers, setCustomers] = useState<CustomerItem[]>([]);
+  const [trainings, setTrainings] = useState<TrainingItem[]>([]);
 
   return (
     <>
@@ -42,7 +44,7 @@ function App() {
           </Box>
             <br></br>
             {/*Page Content*/}
-        <Outlet context={{customers, setCustomers}}/>
+        <Outlet context={{customers, setCustomers, trainings, setTrainings}}/>
         <CssBaseline /> {/*Shows elements similar regardless of browser*/}
       </Container>
 

@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import { DataGrid } from "@mui/x-data-grid";
-import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import type { GridColDef } from "@mui/x-data-grid";
 
 import type { CustomerItem } from "../types";
 import { useOutletContext } from "react-router";
@@ -23,6 +23,7 @@ function Customer() {
         { field: 'city', headerName: 'City' },
         { field: 'email', headerName: 'Email', flex: 1 },
         { field: 'phone', headerName: 'Phone', flex: 1 },
+        
 
     ]
 
