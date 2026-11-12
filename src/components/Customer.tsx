@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 
 import { DataGrid } from "@mui/x-data-grid";
-import type { GridColDef } from "@mui/x-data-grid";
+import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 
 import type { CustomerItem } from "../types";
 import { useOutletContext } from "react-router";
+import AddCustomer from "./AddCustomer";
+import { Button } from "@mui/material";
 
 
 function Customer() {
@@ -23,7 +25,14 @@ function Customer() {
         { field: 'city', headerName: 'City' },
         { field: 'email', headerName: 'Email', flex: 1 },
         { field: 'phone', headerName: 'Phone', flex: 1 },
-        
+        {
+            field: '_links.self.href',
+            headerName: ' ',
+            renderCell: (params: GridRenderCellParams) => 
+                <Button style={{color:"red"}} onClick={() => handleDelete(params.row._links.self.href)}>
+                    Delete
+                </Button>
+        }
 
     ]
 
@@ -50,8 +59,28 @@ function Customer() {
         fetchCustomers();
     }, []);
 
+    const handleDelete = (url: string) => {
+        if (window.confirm("Are you sure?")) {
+        fetch(url, { method: 'DELETE' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error when deleting a car");
+            }
+            return response.json();
+        })
+        .then(() => {
+            fetchCustomers();
+            //setOpen(true);
+        })
+        .catch(err => console.error(err))
+        
+    }
+
+    }
+
     return (
         <>
+        <AddCustomer fetchCustomers={fetchCustomers}/>
             <DataGrid
                 rows={customers || []}
                 columns={columns}
