@@ -7,6 +7,7 @@ import type { CustomerItem } from "../types";
 import { useOutletContext } from "react-router";
 import AddCustomer from "./AddCustomer";
 import { Button } from "@mui/material";
+import UpdateCustomer from "./UpdateCustomer";
 
 
 function Customer() {
@@ -26,10 +27,20 @@ function Customer() {
         { field: 'email', headerName: 'Email', flex: 1 },
         { field: 'phone', headerName: 'Phone', flex: 1 },
         {
+            field: '_links.customer.href',
+            headerName: ' ',
+            sortable: false,
+            filterable: false,
+            renderCell: (params: GridRenderCellParams) =>
+                <UpdateCustomer fetchCustomers={fetchCustomers} CustomerItem={params.row} />
+        },
+        {
             field: '_links.self.href',
             headerName: ' ',
-            renderCell: (params: GridRenderCellParams) => 
-                <Button style={{color:"red"}} onClick={() => handleDelete(params.row._links.self.href)}>
+            sortable: false,
+            filterable: false,
+            renderCell: (params: GridRenderCellParams) =>
+                <Button style={{ color: "red" }} onClick={() => handleDelete(params.row._links.self.href)}>
                     Delete
                 </Button>
         }
@@ -61,31 +72,31 @@ function Customer() {
 
     const handleDelete = (url: string) => {
         if (window.confirm("Are you sure?")) {
-        fetch(url, { method: 'DELETE' })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Error when deleting a car");
-            }
-            return response.json();
-        })
-        .then(() => {
-            fetchCustomers();
-            //setOpen(true);
-        })
-        .catch(err => console.error(err))
-        
-    }
+            fetch(url, { method: 'DELETE' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Error when deleting a car");
+                    }
+                    return response.json();
+                })
+                .then(() => {
+                    fetchCustomers();
+                    //setOpen(true);
+                })
+                .catch(err => console.error(err))
+
+        }
 
     }
 
     return (
         <>
-        <AddCustomer fetchCustomers={fetchCustomers}/>
+            <AddCustomer fetchCustomers={fetchCustomers} />
             <DataGrid
                 rows={customers || []}
                 columns={columns}
                 getRowId={row => row._links.self.href}
-                
+
             />
         </>
     )
