@@ -5,6 +5,7 @@ import type { GridColDef } from "@mui/x-data-grid";
 import { useOutletContext } from "react-router";
 import type { TrainingItem } from "../types";
 import dayjs from "dayjs";
+import AddTraining from "./AddTraining";
 
 
 
@@ -24,7 +25,9 @@ function Training() {
         { field: 'duration', headerName: 'Duration', },
         { field: 'activity', headerName: 'Activitys', flex: 1 },
         { field: 'customer', headerName: 'Customer', flex: 1,
-          renderCell: ({ row }) => `${row.customer.firstname} ${row.customer.lastname}`
+          renderCell: ({ row }) => row.customer
+            ? `${row.customer.firstname} ${row.customer.lastname}`
+            : ""
            }
          
     ]
@@ -58,7 +61,8 @@ function Training() {
 
     return (
         <>
-            <DataGrid
+        <AddTraining fetchTrainings={fetchTrainings} />
+            <DataGrid 
                 rows={trainings || []}
                 columns={columns}
                 getRowId={row => row.id}
