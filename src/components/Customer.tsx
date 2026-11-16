@@ -6,8 +6,11 @@ import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import type { CustomerItem } from "../types";
 import { useOutletContext } from "react-router";
 import AddCustomer from "./AddCustomer";
-import { Button } from "@mui/material";
+
 import UpdateCustomer from "./UpdateCustomer";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 
 function Customer() {
@@ -40,9 +43,9 @@ function Customer() {
             sortable: false,
             filterable: false,
             renderCell: (params: GridRenderCellParams) =>
-                <Button style={{ color: "red" }} onClick={() => handleDelete(params.row._links.self.href)}>
-                    Delete
-                </Button>
+                <IconButton onClick={() => handleDelete(params.row._links.self.href)} title="Delete">
+                    <DeleteIcon color="error" />
+                </IconButton>
         }
 
     ]

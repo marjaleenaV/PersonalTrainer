@@ -6,7 +6,9 @@ import { useOutletContext } from "react-router";
 import type { TrainingItem } from "../types";
 import dayjs from "dayjs";
 import AddTraining from "./AddTraining";
-import { Button } from "@mui/material";
+
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
@@ -40,9 +42,9 @@ function Training() {
             sortable: false,
             filterable: false,
             renderCell: (params: GridRenderCellParams) =>
-                <Button style={{ color: "red" }} onClick={() => handleDelete(params.row.id)}>
-                    Delete
-                </Button>
+                <IconButton onClick={() => handleDelete(params.row._links.self.href)} title="Delete">
+                    <DeleteIcon color="error" />
+                </IconButton>
         }
 
     ]

@@ -5,7 +5,9 @@ import CustomerForm from "./CustomerForm";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions"
-import Button from "@mui/material/Button"
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from '@mui/icons-material/Edit';
 
 type UpdateCustomerProps = {
     fetchCustomers: () => void;
@@ -53,13 +55,13 @@ function UpdateCustomer(props: UpdateCustomerProps) {
     handleClose();
   };
 
-  /*<IconButton onClick={handleClickOpen}>
-        <EditIcon />
-      </IconButton>*/
+  
 
     return (
         <>
-      <Button onClick={handleClickOpen}>Edit</Button>
+        <IconButton onClick={handleClickOpen} title="Edit">
+        <EditIcon />
+      </IconButton>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Update Car</DialogTitle>
         <CustomerForm customer={customer} setCustomer={setCustomer} />
