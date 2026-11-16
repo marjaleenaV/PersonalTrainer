@@ -9,8 +9,11 @@ import './App.css'
 import Box from '@mui/material/Box';
 import { useState } from 'react';
 
+
 import type { CustomerItem } from './types';
 import type { TrainingItem } from './types';
+
+
 
 
 
@@ -28,23 +31,23 @@ function App() {
             <Typography variant="h6" >PersonalTrainer</Typography>
           </Toolbar>
         </AppBar>
-                  {/*Links between pages*/}
-          <Box>
-            <Box sx={{
-              margin: 2,
-              display: 'inline'
-            }}>
-              <Link to={"/"}>{'Customer'}</Link>
-            </Box>
-            <Box sx={{
-              display: 'inline'
-            }}>
-              <Link to={"/training"}>Training</Link>
-            </Box>
+        {/*Links between pages*/}
+        <Box>
+          <Box sx={{
+            margin: 2,
+            display: 'inline'
+          }}>
+            <Link to={"/"}>{'Customer'}</Link>
           </Box>
-            <br></br>
-            {/*Page Content*/}
-        <Outlet context={{customers, setCustomers, trainings, setTrainings}}/>
+          <Box sx={{
+            display: 'inline'
+          }}>
+            <Link to={"/training"}>Training</Link>
+          </Box>
+        </Box>
+        <br></br>
+        {/*Page Content*/}
+        <Outlet context={{ customers, setCustomers, trainings, setTrainings }} />
         <CssBaseline /> {/*Shows elements similar regardless of browser*/}
       </Container>
 

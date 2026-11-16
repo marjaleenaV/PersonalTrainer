@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, Toolbar } from "@mui/x-data-grid";
 import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 
 import type { CustomerItem } from "../types";
@@ -10,8 +10,24 @@ import AddCustomer from "./AddCustomer";
 import UpdateCustomer from "./UpdateCustomer";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';
+import Tooltip from '@mui/material/Tooltip';
+import { ToolbarButton } from '@mui/x-data-grid';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { ExportCsv } from "@mui/x-data-grid";
 
 
+
+function CustomToolBar() {
+    return(
+        <Toolbar>
+        <Tooltip title="Download as CSV">
+              <ExportCsv render={<ToolbarButton />}>
+                <FileDownloadIcon fontSize="small" />
+              </ExportCsv>
+            </Tooltip>
+            </Toolbar>
+    );
+}
 
 function Customer() {
 
@@ -31,7 +47,7 @@ function Customer() {
         { field: 'phone', headerName: 'Phone', flex: 1 },
         {
             field: '_links.customer.href',
-            headerName: ' ',
+            headerName: 'Edit',
             sortable: false,
             filterable: false,
             renderCell: (params: GridRenderCellParams) =>
@@ -39,7 +55,7 @@ function Customer() {
         },
         {
             field: '_links.self.href',
-            headerName: ' ',
+            headerName: 'Delete',
             sortable: false,
             filterable: false,
             renderCell: (params: GridRenderCellParams) =>
@@ -92,6 +108,7 @@ function Customer() {
 
     }
 
+
     return (
         <>
             <AddCustomer fetchCustomers={fetchCustomers} />
@@ -99,7 +116,8 @@ function Customer() {
                 rows={customers || []}
                 columns={columns}
                 getRowId={row => row._links.self.href}
-
+                showToolbar
+                slots={{ toolbar: CustomToolBar }}
             />
         </>
     )

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, Toolbar } from "@mui/x-data-grid";
 import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 
 import { useOutletContext } from "react-router";
@@ -10,6 +10,25 @@ import AddTraining from "./AddTraining";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';
 
+
+import Tooltip from '@mui/material/Tooltip';
+import { ToolbarButton } from '@mui/x-data-grid';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { ExportCsv } from "@mui/x-data-grid";
+
+
+
+function CustomToolBar() {
+    return(
+        <Toolbar>
+        <Tooltip title="Download as CSV">
+              <ExportCsv render={<ToolbarButton />}>
+                <FileDownloadIcon fontSize="small" />
+              </ExportCsv>
+            </Tooltip>
+            </Toolbar>
+    );
+}
 
 
 function Training() {
@@ -38,7 +57,7 @@ function Training() {
         //Delete button and function to every row
         {
             field: 'id',
-            headerName: ' ',
+            headerName: 'Delete',
             sortable: false,
             filterable: false,
             renderCell: (params: GridRenderCellParams) =>
@@ -102,7 +121,8 @@ function Training() {
                 rows={trainings || []}
                 columns={columns}
                 getRowId={row => row.id}
-
+                showToolbar
+                slots={{ toolbar: CustomToolBar }}
             />
         </>
     )

@@ -63,7 +63,7 @@ function UpdateCustomer(props: UpdateCustomerProps) {
         <EditIcon />
       </IconButton>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Update Car</DialogTitle>
+        <DialogTitle>Update Customer information</DialogTitle>
         <CustomerForm customer={customer} setCustomer={setCustomer} />
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
