@@ -75,7 +75,7 @@ function Customer() {
             fetch(url, { method: 'DELETE' })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error("Error when deleting a car");
+                        throw new Error("Error when deleting a customer");
                     }
                     return response.json();
                 })
