@@ -14,18 +14,19 @@ import Tooltip from '@mui/material/Tooltip';
 import { ToolbarButton } from '@mui/x-data-grid';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { ExportCsv } from "@mui/x-data-grid";
+import { deleteCustomer, getCustomers } from "../personaltrainerapi";
 
 
 
 function CustomToolBar() {
-    return(
+    return (
         <Toolbar>
-        <Tooltip title="Download as CSV">
-              <ExportCsv render={<ToolbarButton />}>
-                <FileDownloadIcon fontSize="small" />
-              </ExportCsv>
+            <Tooltip title="Download as CSV">
+                <ExportCsv render={<ToolbarButton />}>
+                    <FileDownloadIcon fontSize="small" />
+                </ExportCsv>
             </Tooltip>
-            </Toolbar>
+        </Toolbar>
     );
 }
 
@@ -50,6 +51,7 @@ function Customer() {
             headerName: 'Edit',
             sortable: false,
             filterable: false,
+            disableExport: true,
             renderCell: (params: GridRenderCellParams) =>
                 <UpdateCustomer fetchCustomers={fetchCustomers} CustomerItem={params.row} />
         },
@@ -58,6 +60,7 @@ function Customer() {
             headerName: 'Delete',
             sortable: false,
             filterable: false,
+            disableExport: true,
             renderCell: (params: GridRenderCellParams) =>
                 <IconButton onClick={() => handleDelete(params.row._links.self.href)} title="Delete">
                     <DeleteIcon color="error" />
@@ -67,16 +70,8 @@ function Customer() {
     ]
 
     const fetchCustomers = () => {
-        fetch("https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/customers")
 
-            .then(response => {
-
-                if (!response.ok) {
-                    throw new Error("Something went wrong");
-                }
-                return response.json();
-
-            })
+        getCustomers() // -> personaltrainerapi.ts
 
             .then(responseData => {
                 console.log(responseData);
@@ -91,16 +86,11 @@ function Customer() {
 
     const handleDelete = (url: string) => {
         if (window.confirm("Are you sure?")) {
-            fetch(url, { method: 'DELETE' })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("Error when deleting a customer");
-                    }
-                    return response.json();
-                })
+            
+                deleteCustomer(url) // -> personaltrainerapi.ts
+
                 .then(() => {
                     fetchCustomers();
-                    //setOpen(true);
                 })
                 .catch(err => console.error(err))
 

@@ -3,6 +3,7 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import { Dialog, DialogTitle, DialogActions } from "@mui/material";
 import TrainingForm from "./TrainingForm";
+import { addNewTraining } from "../personaltrainerapi";
 
 
 type AddTrainingProps = {
@@ -25,17 +26,7 @@ function AddTraining(props: AddTrainingProps) {
   };
 
   const handleSubmit = () => {
-   fetch("https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/trainings", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({...training, customer: customerURL})
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Error")
-        }
-        return response.json()
-    })
+   addNewTraining(training, customerURL)
     .then(() => props.fetchTrainings())
     .catch(err => console.log(err))
     handleClose();

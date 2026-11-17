@@ -3,6 +3,7 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import { Dialog, DialogTitle, DialogActions } from "@mui/material";
 import CustomerForm from "./CustomerForm";
+import { addNewCustomer } from "../personaltrainerapi";
 
 
 type AddCustomerProps = {
@@ -22,17 +23,7 @@ export default function AddCustomer(props: AddCustomerProps) {
   };
 
   const handleSubmit = () => {
-   fetch("https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/customers", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(customer)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Error")
-        }
-        return response.json()
-    })
+   addNewCustomer(customer)  // -> personeltrainerapi.ts
     .then(() => props.fetchCustomers())
     .catch(err => console.log(err))
     handleClose();

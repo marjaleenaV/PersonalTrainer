@@ -6,6 +6,7 @@ import { useOutletContext } from "react-router";
 import type { TrainingItem } from "../types";
 import dayjs from "dayjs";
 import AddTraining from "./AddTraining";
+import { deleteTraining, getTrainings } from "../personaltrainerapi";
 
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -49,19 +50,23 @@ function Training() {
         
         //Dropdown list of already existing customers -> customer needs to be created in customerpage
         {
-            field: 'customer', headerName: 'Customer', flex: 1,
+            field: 'customer', 
+            headerName: 'Customer', 
+            flex: 1,
             renderCell: ({ row }) => row.customer
                 ? `${row.customer.firstname} ${row.customer.lastname}`
                 : ""
         },
+
         //Delete button and function to every row
         {
             field: 'id',
             headerName: 'Delete',
             sortable: false,
             filterable: false,
+            disableExport: true,  
             renderCell: (params: GridRenderCellParams) =>
-                <IconButton onClick={() => handleDelete(params.row._links.self.href)} title="Delete">
+                <IconButton onClick={() => handleDelete(params.row.id)} title="Delete">
                     <DeleteIcon color="error" />
                 </IconButton>
         }
@@ -71,14 +76,8 @@ function Training() {
 
 
     const fetchTrainings = () => {
-        fetch("https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/gettrainings")
-            .then(response => {
-
-                if (!response.ok) {
-                    throw new Error("Something went wrong");
-                }
-                return response.json();
-            })
+        
+            getTrainings()  // -> personaltrainerapi.ts
 
             .then(responseData => {
                 console.log(responseData);
@@ -97,13 +96,9 @@ function Training() {
     //Search a correct training based on id of training and deletes it.
     const handleDelete = (id: number) => {
         if (window.confirm("Are you sure?")) {
-            fetch(`https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/trainings/${id}`, {method: 'DELETE' })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("Error when deleting a training");
-                    }
-                    return response.json();
-                })
+            
+                deleteTraining(id)   // -> personaltrainerapi.ts
+                
                 .then(() => {
                     fetchTrainings();
                     
