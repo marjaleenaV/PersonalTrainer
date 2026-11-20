@@ -45,10 +45,10 @@ function Training() {
             field: 'date', headerName: 'Date', flex: 1,
             valueFormatter: (value) => value ? dayjs(value).format("DD.MM.YYYY HH:mm") : "",
         },
-        { field: 'duration', headerName: 'Duration', },
+        { field: 'duration', headerName: 'Duration' },
         { field: 'activity', headerName: 'Activitys', flex: 1 },
         
-        //Dropdown list of already existing customers -> customer needs to be created in customerpage
+        
         {
             field: 'customer', 
             headerName: 'Customer', 

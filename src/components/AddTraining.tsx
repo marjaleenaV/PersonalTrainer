@@ -39,7 +39,8 @@ function AddTraining(props: AddTrainingProps) {
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New Training</DialogTitle>
-        <TrainingForm training={training} setTraining={setTraining} customerURL={customerURL} setCustomerURL={setCustomerURL}/>
+        
+        <TrainingForm training={training} setTraining={setTraining} customerURL={customerURL} setCustomerURL={setCustomerURL}/> 
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleSubmit}>

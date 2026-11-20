@@ -5,6 +5,7 @@ import './index.css'
 import App from './App.tsx'
 import Training from './components/Training.tsx'
 import Customer from './components/Customer.tsx'
+import Calendar from './components/Calendar.tsx'
 
 const router = createBrowserRouter([  // Import components that are used in routes
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([  // Import components that are used in rout
         path: "training",                // path can be defined relative to the parent path
         element: <Training />,
       },
+      {
+        path: "calendar",
+        element: <Calendar />,
+      }
     ]
   }
 ]);

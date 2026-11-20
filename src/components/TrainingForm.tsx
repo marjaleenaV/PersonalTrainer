@@ -6,6 +6,7 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import { getCustomers } from "../personaltrainerapi";
 
 
 
@@ -20,12 +21,10 @@ function TrainingForm(props: TrainingFormProps) {
 
     const [customers, setCustomers] = useState<CustomerItem[]>([]);
 
+
+    //Customers are fetched because they are needed on the dropdown menu on the form
     useEffect(() => {
-        fetch("https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/customers")
-            .then(response => {
-                if (!response.ok) throw new Error("Could not load customers");
-                return response.json();
-            })
+        getCustomers()  // -> personaltrainerapi
             .then(data => setCustomers(data._embedded.customers))
             .catch(console.error);
     }, []);
@@ -74,8 +73,9 @@ function TrainingForm(props: TrainingFormProps) {
                 fullWidth
                 variant="standard"
                 >
-                {customers.map(customer => {
-                    const url  = customer._links?.self.href;
+                    
+                {customers.map(customer => {    //dropdownlist of customer already existing customers -> new customers are created on customers page
+                    const url  = customer._links?.self.href; 
                     return url ? (
                         <MenuItem key={url} value={url}>
                             {customer.firstname} {customer.lastname}</MenuItem>

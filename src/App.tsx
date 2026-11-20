@@ -40,9 +40,15 @@ function App() {
             <Link to={"/"}>{'Customer'}</Link>
           </Box>
           <Box sx={{
+            margin: 2,
             display: 'inline'
           }}>
             <Link to={"/training"}>Training</Link>
+          </Box>
+          <Box sx={{
+            display: 'inline'
+          }}>
+            <Link to={"/calendar"}>Calendar</Link>
           </Box>
         </Box>
         <br></br>
